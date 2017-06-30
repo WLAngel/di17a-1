@@ -1,6 +1,5 @@
 var https = require('https')
 
-
 // https://nkiua09s52.execute-api.ap-northeast-1.amazonaws.com/dev/encrypt
 const options = {
   hostname: 'nkiua09s52.execute-api.ap-northeast-1.amazonaws.com',
@@ -31,19 +30,19 @@ function encryptText(req, res) {
           plaintext: plain
         }))
         httpsrequest.end()
-      }
+      } // check plaintext length
       else {
         res.json(413, {
           message: 'decoded plaintext length exceeds 16 bytes'
         })
       }
-    }
+    } // check if plaintext is valid
     else {
       res.json(400, {
         message: 'plaintext is not valid hex encoded'
       })
     }
-  } // check content-type and is plaintext valid
+  } // check if content-type is valid
   else {
     res.json(400, {
       message: 'Content-Type should be application/json'
@@ -58,8 +57,6 @@ function validHex(s) {
   }
   return s.split('').filter(x => hex.indexOf(x.toLowerCase()) != -1).length == s.length
 }
-
-
 
 module.exports = {
   encryptText,

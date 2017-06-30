@@ -68,6 +68,10 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/KvPostResponse"
+        "404":
+          description: Not found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         "400":
           description: Bad Request, usually malformed parameters
           schema:
@@ -90,6 +94,10 @@ paths:
             $ref: "#/definitions/encryptResponse"
         "400":
           description: Bad Request, usually malformed parameters
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "413":
+          description: Text too large
           schema:
             $ref: "#/definitions/ErrorResponse"
   /swagger:

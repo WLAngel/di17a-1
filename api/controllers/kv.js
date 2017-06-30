@@ -1,12 +1,9 @@
 var URLSafeBase64 = require('urlsafe-base64');
 
-let now = new Date()
-
 const kv = {
   init: 'deadbeef',
 }
 // base64('init') = aW5pdA
-
 
 function getKEY(req, res) {
   var key = req.swagger.params.KvKey.value
@@ -15,7 +12,7 @@ function getKEY(req, res) {
     if(kv.hasOwnProperty(key)){
       res.json(200, {
         VALUE: kv[key],
-        TS: now,
+        TS: new Date(),
       })
     }
     else {
@@ -41,7 +38,7 @@ function deleteKEY(req, res) {
       delete kv[key]
       res.json(200, {
         "OLD_VALUE": value,
-        TS: now,
+        TS: new Date(),
       })
     }
   }
@@ -58,12 +55,10 @@ function postKEY(req, res) {
 
   if(URLSafeBase64.validate(key)) {
     key = URLSafeBase64.decode(key)
-    // base64
     var value = req.swagger.params.body.value.VALUE
-    // value = Buffer.from(value, 'base64').toString('ascii')
     kv[key] = value
     res.json(200, {
-      TS: now,
+      TS: new Date(),
     })
   }
   else {
