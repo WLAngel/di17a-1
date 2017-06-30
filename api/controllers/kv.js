@@ -41,6 +41,11 @@ function deleteKEY(req, res) {
         TS: new Date(),
       })
     }
+    else {
+      res.json(200, {
+        TS: new Date(),
+      })
+    }
   }
   else {
     res.json(400, {

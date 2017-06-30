@@ -43,17 +43,17 @@ describe('controllers', function() {
     describe('mixed operation', function() {
       let key = 'abcdeabcdeabcdeabcde'
       let value = 'bcdeabcdeabcdeabcde'
-      
+
       it('get, post, delete, get', function(done) {
         let uri = `/kv/${key}`
         let agent = request.agent(server)
-        
+
         agent
           .get(uri).expect(404)
-          .then(() => 
+          .then(() =>
             agent.post(uri).type('json').send({VALUE: value})
               .expect(200))
-          .then(() => 
+          .then(() =>
             agent.get(uri).expect(200))
               .then(res => assert(res.body.VALUE, value))
           .then(() => agent.del(uri).expect(200))
@@ -61,5 +61,24 @@ describe('controllers', function() {
           .then(() => done(), err => done(err))
       });
     }); // mixed operation
+
+    describe('delete, delete', function() {
+      let key = 'abcdeabcdeabcdeabcde'
+      let value = 'bcdeabcdeabcdeabcde'
+
+      it('delete, delete', function(done) {
+        let uri = `/kv/${key}`
+        let agent = request.agent(server)
+
+        agent
+          .post(uri).type('json').send({ VALUE: value })
+              .expect(200)
+          .then(() =>
+            agent.delete(uri).expect(200))
+              .then(() => agent.del(uri).expect(200))
+          .then(() => done(), err => done(err))
+      });
+    }); // mixed operation
+
   }); // kv
 }); // controllers
