@@ -3,7 +3,7 @@ var URLSafeBase64 = require('urlsafe-base64');
 let now = new Date()
 
 const kv = {
-  init: 'gg',
+  init: 'deadbeef',
 }
 // base64('init') = aW5pdA
 
@@ -60,7 +60,7 @@ function postKEY(req, res) {
     key = URLSafeBase64.decode(key)
     // base64
     var value = req.swagger.params.body.value.VALUE
-    value = Buffer.from(value, 'base64').toString('ascii')
+    // value = Buffer.from(value, 'base64').toString('ascii')
     kv[key] = value
     res.json(200, {
       TS: now,
