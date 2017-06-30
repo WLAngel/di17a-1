@@ -61,13 +61,33 @@ paths:
         - name: body
           in: body
           required: true
-          schema: 
+          schema:
             $ref: "#/definitions/KvPostRequest"
       responses:
         "200":
           description: Success
           schema:
             $ref: "#/definitions/KvPostResponse"
+        "400":
+          description: Bad Request, usually malformed parameters
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /encrypt:
+    x-swagger-router-controller: encrypt
+    post:
+      description: encrypt
+      operationId: encryptText
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/encryptRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/encryptResponse"
         "400":
           description: Bad Request, usually malformed parameters
           schema:
@@ -94,7 +114,7 @@ definitions:
       TS:
         type: string
   KvPostRequest:
-    required: 
+    required:
       - VALUE
     properties:
       VALUE:
@@ -104,6 +124,18 @@ definitions:
       - TS
     properties:
       TS:
+        type: string
+  encryptRequest:
+    required:
+      - plaintext
+    properties:
+      plaintext:
+        type: string
+  encryptResponse:
+    required:
+      - ciphertext
+    properties:
+      ciphertext:
         type: string
   ErrorResponse:
     required:
