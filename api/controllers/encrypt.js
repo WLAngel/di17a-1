@@ -18,7 +18,7 @@ function encryptText(req, res) {
   if(CT === 'application/json') {
     if(validHex(plain)){
       var length = Buffer.from(plain, 'hex').length
-      if(length <= 16) {
+      if(length <= 8) {
         var httpsrequest = https.request(options, (response) => {
           response.on('data', (chunk) => {
             res.json(200, {

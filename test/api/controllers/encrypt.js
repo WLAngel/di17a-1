@@ -29,7 +29,33 @@ describe('controllers', function() {
           .expect(200)
           .then(res => assert(res.body.ciphertext, 'c3cc3debd65d2473930406f810a6c482'))
           .then(() => done(), err => done(err))
-      }) 
-    }) // example
+      })
+    })// example
+
+    describe('bad input', function() {
+      it('should 400 with odd length', function(done) {
+        this.timeout(5000)
+        request(server)
+          .post(`/encrypt`)
+          .type('json')
+          .send({plaintext: 'deadbee'})
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .end((err, res) => done(err || undefined))
+      })
+
+      it('should 413 with exceeded length', function(done) {
+        this.timeout(5000)
+        request(server)
+          .post(`/encrypt`)
+          .type('json')
+          .send({plaintext: 'deadbeefdeadbeefde'})
+          .expect('Content-Type', /json/)
+          .expect(413)
+          .end((err, res) => done(err || undefined))
+      })
+
+    })
+
   }); // kv
 }); // controllers
